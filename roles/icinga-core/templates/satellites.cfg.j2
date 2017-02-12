@@ -4,7 +4,7 @@
 define host{
 host_name       {{ item }}
 use             generic-host
-address         {{ item }}
+address         {{ hostvars[item].ansible_ssh_host }}
 max_check_attempts 2
 hostgroups      {{ item }},satellites
 }
