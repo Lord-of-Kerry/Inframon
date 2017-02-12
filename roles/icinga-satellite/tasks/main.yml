@@ -1,0 +1,24 @@
+---
+- name: install common packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - mod-gearman-worker
+    - monitoring-plugins-standard
+
+- name: uninstall unneeded packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: absent
+  with_items:
+    - rpcbind
+
+- name: Add gearman-worker Config
+  template: src=worker.conf.j2 dest=/etc/mod-gearman/worker.conf owner=root group=root
+  notify:
+    - start mod-gearman-worker
+    - reload mod-gearman-worker
+

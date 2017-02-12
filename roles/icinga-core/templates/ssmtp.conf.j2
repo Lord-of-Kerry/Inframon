@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+# Config file for sSMTP sendmail
+
+root={{ icinga_email_address }}
+mailhub={{ icinga_email_srv }}
+rewriteDomain={{ icinga_email_rewriteDomain }}
+hostname={{ icinga_email_rewriteDomain }}
+FromLineOverride=no
+UseSTARTTLS={{ icinga_email_UseSTARTTLS }}
+UseTLS={{ icinga_email_UseTLS }}
+AuthUser={{ icinga_email_AuthUser }}
+AuthPass={{ icinga_email_pw }}
+AuthMethod=LOGIN

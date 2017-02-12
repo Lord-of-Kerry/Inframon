@@ -1,0 +1,72 @@
+---
+- name: Install ssmtp
+  apt: pkg=ssmtp state=installed update_cache=true
+
+- name: configuring ssmtp
+  template: src=ssmtp.conf.j2 dest=/etc/ssmtp/ssmtp.conf owner=root group=root
+
+- name: configuring ssmtp aliases
+  template: src=revaliases.j2 dest=/etc/ssmtp/revaliases owner=root group=root
+
+- name: Install Icinga
+  apt: pkg=icinga state=installed update_cache=true
+  register: icingainstalled
+
+- name: Install NRPE-Plugin
+  apt: pkg=nagios-nrpe-plugin state=installed update_cache=true
+
+- name: Install mod-gearman-worker
+  apt: pkg=mod-gearman-worker state=installed update_cache=true
+  register: mod_gearman_workerinstalled
+
+- name: Install mod-gearman-module
+  apt: pkg=mod-gearman-module state=installed update_cache=true
+  register: mod_gearman_moduleinstalled
+  notify:
+    - Start Icinga
+
+- lineinfile:
+    dest: /etc/icinga/icinga.cfg
+    regexp: '^check_external_commands='
+    line: 'check_external_commands=1'
+
+- name: Make sure we can use htpasswd module
+  apt: "pkg=python-passlib state=installed"
+
+- name: generate Icinga contacts
+  template: src=contacts.cfg.j2 dest=/etc/icinga/objects/contacts.cfg
+  when: icinga_admincontacts is defined
+
+- htpasswd:
+    path: /etc/icinga/htpasswd.users
+    name: icingaadmin
+    password: "{{ icingaadminpw }}"
+
+- name: Activate mod_gearman in Icinga
+  when: mod_gearman_moduleinstalled|success
+  copy: src=mod_gearman.cfg dest=/etc/icinga/modules/mod_gearman.cfg owner=root group=root
+
+- name: Create gearman directory
+  file: path='/etc/mod-gearman' state=directory  mode=0755
+
+- name: Add mod_gearman Site Config
+  when: mod_gearman_moduleinstalled|success
+  template: src=worker.conf.j2 dest=/etc/mod-gearman/worker.conf owner=root group=root
+
+- name: Configure Hostgroups for Icinga Satellites
+  template: "src=hostgroups-satellites.cfg.j2 dest='/etc/icinga/objects/hostgroups-satellites.cfg' owner=root group=root"
+
+- name: Configure hostgroup for gateways
+  template: "src=hostgroup-gateways.cfg.j2 dest='/etc/icinga/objects/hostgroup-gateways.cfg' owner=root group=root"
+
+- name: Configure gateways
+  template: "src=gateways.cfg.j2 dest='/etc/icinga/objects/gateways.cfg' owner=root group=root"
+
+- name: Configure Commands
+  template: "src=inframon-commands.cfg.j2 dest='/etc/icinga/objects/inframon-commands.cfg' owner=root group=root"
+
+- name: Configure Icinga Satellites as objects
+  template: "src=satellites.cfg.j2 dest='/etc/icinga/objects/satellites.cfg' owner=root group=root"
+  notify:
+    - Reload Icinga
+

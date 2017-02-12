@@ -1,0 +1,9 @@
+server={{icinga_gearman_hostname}}
+key={{icinga_gearman_password}}
+hosts=no
+services=no
+{% for item in groups['icinga-satellite'] %}
+hostgroups={{ item }}
+{% endfor %}
+p1_file=/usr/share/mod-gearman/mod_gearman_p1.pl
+

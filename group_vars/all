@@ -1,0 +1,22 @@
+---
+icinga_coreserver_hostname: icinga.server.freie-infrastruktur.de
+icinga_gearman_hostname: icgearman.server.freie-infrastruktur.de
+icinga_gearman_password: very-secret-password
+
+icinga_email_address: monitoring@freie-infrastruktur.de
+icinga_email_AuthUser: monitoring@freie-infrastruktur.de
+icinga_email_pw: XXXXXXXXXXXXXXXX
+icinga_email_srv: ha01s006-cl.org-dns.com:587
+icinga_email_rewriteDomain: server.freie-infrastruktur.de
+icinga_email_UseSTARTTLS: YES
+icinga_email_UseTLS: YES
+
+icingaadminpw: 1i1ngaadm1n
+
+icinga_admincontacts:
+ - "marcus.schuel@freie-infrastruktur.de"
+ - "monitoring@freie-infrastruktur.de"
+
+administratoren:
+ - "ssh-key-mrs"
+ - "ssh-key-cs"

@@ -1,0 +1,6 @@
+---
+- name: Start nagios-nrpe-plugin
+  service: name=nagios-nrpe-plugin state=started
+
+- name: Reload nagios-nrpe-plugin
+  service: name=nagios-nrpe-plugin state=reloaded

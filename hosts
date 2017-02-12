@@ -1,0 +1,21 @@
+# ===  Icinga Core Server ===
+# === exactly ONE server requirerd, for every hundred objects 1 core / 256MB RAM ===
+[icinga-coreserver]
+icinga.server.freie-infrastruktur.de  ansible_ssh_host=10.1.160.22
+
+# ===  Icinga satellite Server ===
+# === e.g. for every L2 collision domain one satellite, for every hundred objects 1 core / 256MB RAM ===
+[icinga-satellite]
+icsat01-01.server.freie-infrastruktur.de ansible_ssh_host=10.1.160.24
+icsat02-01.server.freie-infrastruktur.de ansible_ssh_host=10.1.168.24
+icsat03-01.server.freie-infrastruktur.de ansible_ssh_host=10.1.176.24
+icsat04-01.server.freie-infrastruktur.de ansible_ssh_host=10.1.184.24
+
+# ===  Icinga gearman Server ===
+# === exactly ONE server requirerd, can also be the same as the Icinga Core Server ===
+[icinga-gearman]
+icgearman.server.freie-infrastruktur.de ansible_ssh_host=10.1.160.23
+
+[icinga-gateways]
+gw04.server.freie-infrastruktur.de ansible_ssh_host=10.1.160.4
+gw03.server.freie-infrastruktur.de ansible_ssh_host=10.1.160.3

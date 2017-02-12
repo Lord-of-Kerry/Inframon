@@ -1,0 +1,3 @@
+---
+- name: Install NRPE-Plugin
+  apt: pkg=nagios-nrpe-plugin state=installed update_cache=true

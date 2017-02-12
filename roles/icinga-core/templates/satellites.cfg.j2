@@ -1,0 +1,182 @@
+# {{ ansible_managed }}
+
+{% for item in groups['icinga-satellite'] %}
+define host{
+host_name       {{ item }}
+use             generic-host
+address         {{ item }}
+max_check_attempts 2
+hostgroups      {{ item }},satellites
+}
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	receive DHCP lease
+check_command		check_nrpe_1arg_240!check-dhcp-client
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	DNSv4 lookup
+check_command		check_nrpe_1arg_240!check-dns4-client
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	DNSv6 lookup
+check_command		check_nrpe_1arg_240!check-dns6-client
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name               {{ item }}
+service_description     HTTP web access via v4
+check_command           check_nrpe_1arg_240!check-http4-client
+max_check_attempts      2
+check_interval          1
+retry_interval          1
+check_period            24x7
+notification_interval   0
+notification_period     24x7 
+notification_options    w,c,r
+}
+
+define service{
+use			generic-service
+host_name               {{ item }}
+service_description     HTTP web access via v6
+check_command           check_nrpe_1arg_240!check-http6-client
+max_check_attempts      2
+check_interval          1
+retry_interval          1
+check_period            24x7
+notification_interval   0
+notification_period     24x7
+notification_options    w,c,r
+}
+
+define service{
+use			generic-service
+host_name               {{ item }}
+service_description     Speedtest
+check_command           check_nrpe_1arg_240!check_speedtest-cli-2
+max_check_attempts      2
+check_interval          60
+retry_interval          5
+check_period            24x7
+notification_interval   0
+notification_period     24x7
+notification_options    w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	load
+check_command		check_nrpe_1arg_240!check_load
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	RAM
+check_command		check_nrpe_1arg_240!check_ram
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	zombie procs
+check_command		check_nrpe_1arg_240!check_zombie_procs
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	procs
+check_command		check_nrpe_1arg_240!check_total_procs
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	disk
+check_command		check_nrpe_1arg_240!check_disk
+max_check_attempts	2
+check_interval		1
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+define service{
+use			generic-service
+host_name		{{ item }}
+service_description	Updates
+check_command		check_nrpe_1arg_240!check_update
+max_check_attempts	2
+check_interval		60
+retry_interval		1
+check_period		24x7
+notification_interval	0
+notification_period 	24x7
+notification_options	w,c,r
+}
+
+
+
+########################################################
+{% endfor %}

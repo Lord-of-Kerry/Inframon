@@ -1,0 +1,23 @@
+---
+- hosts: icinga-coreserver
+  roles:
+    - icinga-core
+    - icinga-nrpe-plugin
+    - icinga-nrpe-server
+
+- hosts: icinga-gearman
+  roles:
+    - gearman
+    - icinga-nrpe-server
+    - icinga-nrpe-server
+
+- hosts: icinga-satellite
+  roles:
+    - icinga-satellite
+    - icinga-nrpe-plugin
+    - icinga-nrpe-server
+
+- hosts: icinga-gateways
+  roles:
+    - icinga-nrpe-server
+

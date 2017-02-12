@@ -1,0 +1,6 @@
+---
+- name: Start gearman-job-server
+  service: name=gearman-job-server state=started
+
+- name: Stop gearman-job-server
+  service: name=gearman-job-server state=stopped

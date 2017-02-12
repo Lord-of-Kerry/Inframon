@@ -1,0 +1,21 @@
+---
+- name: Install gearman-job-server
+  apt: pkg=gearman-job-server state=installed update_cache=true
+
+- name: Add gearman-job-server Config
+  template: src=gearman-job-server.j2 dest=/etc/default/gearman-job-server owner=root group=root
+
+- name: Add gearman-job-server systemd Config
+  template: src=gearman-job-server.service.j2 dest=/lib/systemd/system/gearman-job-server.service owner=root group=root
+  notify:
+    - Stop gearman-job-server
+    - Start gearman-job-server
+
+
+- name: install common packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - mod-gearman-tools
