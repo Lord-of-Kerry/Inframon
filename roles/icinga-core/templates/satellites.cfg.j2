@@ -12,7 +12,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	receive DHCP lease
-check_command		check_nrpe_1arg_240!check-dhcp-client
+check_command		check_nrpe_1arg_300!check-dhcp-client
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -26,7 +26,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	DNSv4 lookup
-check_command		check_nrpe_1arg_240!check-dns4-client
+check_command		check_nrpe_1arg_300!check-dns4-client
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -40,7 +40,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	DNSv6 lookup
-check_command		check_nrpe_1arg_240!check-dns6-client
+check_command		check_nrpe_1arg_300!check-dns6-client
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -54,7 +54,7 @@ define service{
 use			generic-service
 host_name               {{ item }}
 service_description     HTTP web access via v4
-check_command           check_nrpe_1arg_240!check-http4-client
+check_command           check_nrpe_1arg_300!check-http4-client
 max_check_attempts      2
 check_interval          1
 retry_interval          1
@@ -68,7 +68,7 @@ define service{
 use			generic-service
 host_name               {{ item }}
 service_description     HTTP web access via v6
-check_command           check_nrpe_1arg_240!check-http6-client
+check_command           check_nrpe_1arg_300!check-http6-client
 max_check_attempts      2
 check_interval          1
 retry_interval          1
@@ -82,7 +82,7 @@ define service{
 use			generic-service
 host_name               {{ item }}
 service_description     Speedtest
-check_command           check_nrpe_1arg_240!check_speedtest-cli-2
+check_command           check_nrpe_1arg_300!check_speedtest-cli-2
 max_check_attempts      2
 check_interval          60
 retry_interval          5
@@ -96,7 +96,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	load
-check_command		check_nrpe_1arg_240!check_load
+check_command		check_nrpe_1arg_300!check_load
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -110,7 +110,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	RAM
-check_command		check_nrpe_1arg_240!check_ram
+check_command		check_nrpe_1arg_300!check_ram
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -124,7 +124,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	zombie procs
-check_command		check_nrpe_1arg_240!check_zombie_procs
+check_command		check_nrpe_1arg_300!check_zombie_procs
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -138,7 +138,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	procs
-check_command		check_nrpe_1arg_240!check_total_procs
+check_command		check_nrpe_1arg_300!check_total_procs
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -152,7 +152,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	disk
-check_command		check_nrpe_1arg_240!check_disk
+check_command		check_nrpe_1arg_300!check_disk
 max_check_attempts	2
 check_interval		1
 retry_interval		1
@@ -166,7 +166,7 @@ define service{
 use			generic-service
 host_name		{{ item }}
 service_description	Updates
-check_command		check_nrpe_1arg_240!check_update
+check_command		check_nrpe_1arg_300!check_update
 max_check_attempts	2
 check_interval		60
 retry_interval		1
