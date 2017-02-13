@@ -38,9 +38,40 @@
   when: icinga_admincontacts is defined
 
 - htpasswd:
-    path: /etc/icinga/htpasswd.users
-    name: icingaadmin
+      path: /etc/icinga/htpasswd.users
+      name: icingaadmin
+      password: "{{ icingaadminpw }}"
+
+- htpasswd:
+    path: /etc/thruk/htpasswd
+    name: thrukadmin
     password: "{{ icingaadminpw }}"
+
+- name: Consol repository GPG key import
+  apt_key: url=https://labs.consol.de/repo/stable/RPM-GPG-KEY state=present 
+
+- name: Consol repository import
+  apt_repository: repo='deb http://labs.consol.de/repo/stable/debian jessie main' state=present filename='consol' update_cache='yes'
+
+- name: installing Thruk
+  apt: name='thruk' state='present' update_cache='yes'
+
+- name: configuring Thruk to connect to mk_livestatus
+  template: src=thruk_local.conf.j2 dest=/etc/thruk/thruk_local.conf owner=www-data group=www-data mode=0660
+
+- name: Jessie Backports
+  apt_repository: repo='deb http://ftp.debian.org/debian jessie-backports main' state=present filename='backports' update_cache='yes'
+
+- name: installing check-mk-livestatus
+  apt: name='check-mk-livestatus' state='present' update_cache='yes'
+
+- name: Test for mk_livestatus include in icinga.cfg
+  shell: grep "^broker_module=/usr/lib/check_mk/livestatus.o /var/cache/icinga/live" /etc/icinga/icinga.cfg
+  register: test_grep
+
+- name: add mk_livestatus to icinga.cfg
+  lineinfile: dest=/etc/icinga/icinga.cfg line="broker_module=/usr/lib/check_mk/livestatus.o /var/cache/icinga/live"
+  when: test_grep.stdout != ""
 
 - name: Activate mod_gearman in Icinga
   when: mod_gearman_moduleinstalled|success

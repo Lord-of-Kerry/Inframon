@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 define command {
         command_name    check_nrpe_1arg_300
         command_line    /usr/lib/nagios/plugins/check_nrpe -H $HOSTADDRESS$ -c $ARG1$ -t 300
