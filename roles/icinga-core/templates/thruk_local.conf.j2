@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+############################################
+# put your own settings into this file
+# settings from this file will override
+# those from the thruk.conf
+############################################
+
+
+
+<Component Thruk::Backend>
+    <peer>
+        name    = Icinga
+        id      = 7215e
+        type    = livestatus
+        <options>
+            peer          = /var/cache/icinga/live
+        </options>
+    </peer>
+</Component>
